@@ -9,7 +9,7 @@ There are two ways to use it.
 **Hosted version.** Go to:
 
 ```
-https://josiahlaster.github.io/OpenBorStatsWeb/
+https://josiahlaster.github.io/OpenBOR-Workbench/
 ```
 
 This is served from GitHub Pages. Nothing is installed. (Note: if this URL does not work yet, the repository's Pages source still needs to be set to GitHub Actions under Settings, Pages.)
@@ -174,7 +174,7 @@ Treat downloaded `.txt` files and bundles as the portable source of truth. Data 
 
 - Export compatibility is textual: unknown commands and formatting are preserved exactly, but the app does not execute OpenBOR to verify that exported files run in a specific engine build. Always test exports in OpenBOR itself.
 - Backups and project bundles do not include image or audio file contents, only the entity texts, manifest, and asset path index.
-- The hosted site uses a `/OpenBorStatsWeb/` base path. A custom domain would require changing the base path in `vite.config.ts` and rebuilding.
+- The hosted site uses a `/OpenBOR-Workbench/` base path (the repository name). Renaming the repository changes the site URL and requires updating the base path in `vite.config.ts` and rebuilding. A custom domain would also require a base path change.
 
 ## Development
 
