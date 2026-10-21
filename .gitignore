@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+.reference/
+*.local
+.env
+.env.*
+!.env.example
+.DS_Store
+*.tsbuildinfo
+
+# Local-only tooling output and screenshots
+/dev-server.log
+/dev-server.pid
+/.freebuff/
+/playtest-*.png
+/screenshots/

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Your Game Name</title>
+    <style>
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            color: white;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-overlay">Loading...</div>
+    <div id="game-container">
+        <canvas id="canvas" tabindex="1"></canvas>
+        <div id="overlay"></div>
+        <div id="buttons-overlay"></div>
+    </div>
+    <script>
+        // Served from the Freebuff workbench. The Play button stores the project zip in the Cache API under ?playtest=<key>.
+        const PLAYTEST_CACHE = 'openbor-playtest';
+        // Resolved from this page's own URL so the loader works under any hosting base path.
+        const contentPath = new URL('content/', window.location.href).href;
+        const launchParams = new URLSearchParams(window.location.search);
+        const playtestKey = launchParams.get('playtest');
+        if (launchParams.get('title')) document.title = launchParams.get('title');
+        window.myGame = {
+            contentPath: contentPath,
+            paths: {
+                // standard web app
+                assetsPaths: [],
+                'OpenBOR.zip': contentPath + 'OpenBOR.zip', // OpenBOR engine WASM port
+                'game.css': contentPath + 'game.css',
+                'main.js': contentPath + 'main.js',
+                'mobile.js': contentPath + 'mobile.js',
+                'buttons.zip': contentPath + 'buttons.zip',
+                'fflate.min.js': contentPath + 'fflate.min.js',
+                'nipplejs.min.js': contentPath + 'nipplejs.min.js',
+
+                // Doginals - comment the above paths and uncomment the doginal IDs instead:
+                // assetsPaths: [contentPath + '77b3df2f4b3514f799c2a45f75bd4c0d4c6ba93441777c1aa5d346a948bee47ci0'],
+                // 'OpenBOR.zip': contentPath + 'c0d8e66efa1a2e53495b11d60fc4e1b65374d940b8fbcadf48609a19380b95a1i0',
+                // 'game.css': contentPath + '127b14b6f92648ad642997b8fbcf540880b0b40ec7769d36cd024ee6e78d390ai0',
+                // 'main.js': contentPath + 'a83e0b17e14157d6c66b80e714fcf3899170a7f9d3162cfc678d01736fcb74c0i0',
+                // 'mobile.js': contentPath + 'a68d57fd341f69d3d6f305a9ebe11e2df14e462e784b4418a16ec0a9a59064fdi0',
+                // 'buttons.zip': contentPath + '6bd4c55a8bfbbd8d3e5874df6c07770847e4b754db370644702207fb8cc086b2i0',
+                // 'fflate.min.js': contentPath + '7ad4ed7534dc9e6865ba74890c03507c8c3efe56bc41ba219146ad91bcc0f03di0',
+                // 'nipplejs.min.js': contentPath + 'e59aec9d79599d970f5ce33a9e39d491e0f8505c65ff87a0ed8b777737c7e7a9i0',
+            },
+            assetType: 'zip',
+            baseWidth: 320,
+            baseHeight: 240,
+        };
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = window.myGame.paths['game.css'];
+        document.head.appendChild(link);
+
+        window.myGame.LoadingOverlay = document.getElementById('loading-overlay');
+        window.myGame.canvas = document.getElementById('canvas');
+        window.myGame.canvas.width = window.myGame.baseWidth;
+        window.myGame.canvas.height = window.myGame.baseHeight;
+        window.myGame.overlay = document.getElementById('overlay');
+        window.myGame.buttonsOverlay = document.getElementById('buttons-overlay');
+
+        // The project zip is read here, in the game's own document, and then released from the cache.
+        async function takePlaytestZip(key) {
+            const cache = await caches.open(PLAYTEST_CACHE);
+            const response = await cache.match(key);
+            if (!response) return null;
+            await cache.delete(key);
+            return URL.createObjectURL(await response.blob());
+        }
+
+        (async () => {
+            try {
+                const zipUrl = playtestKey ? await takePlaytestZip(playtestKey) : null;
+                if (!zipUrl) {
+                    window.myGame.LoadingOverlay.textContent = 'Open this page with Play in browser from the workbench.';
+                    return;
+                }
+                window.myGame.paths.assetsPaths = [zipUrl];
+            } catch (error) {
+                window.myGame.LoadingOverlay.textContent = 'Could not read the project: ' + error.message;
+                return;
+            }
+            var script = document.createElement('script');
+            script.src = window.myGame.paths['main.js'];
+            document.body.appendChild(script);
+        })();
+    </script>
+</body>
+</html>

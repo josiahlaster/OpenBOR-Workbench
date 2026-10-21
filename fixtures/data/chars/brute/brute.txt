@@ -1,0 +1,66 @@
+# Brute — enemy demonstration model
+name        Brute
+type        enemy
+subtype     chase
+health      360
+speed       9
+aggression  3
+escapehits  4
+blockodds   220
+grabdistance 36
+throwdamage 28
+score       750 5
+nolife      0
+icon        data/chars/brute/icon.gif
+load        flash
+custom_note enemy variant for comparison
+
+anim idle
+	loop	1
+	delay	12
+	offset	40 96
+	bbox	10 0 60 94
+	frame	data/chars/brute/idle_01.png
+	frame	data/chars/brute/idle_02.png
+
+anim walk
+	loop	1
+	delay	10
+	offset	40 96
+	bbox	8 0 64 94
+	frame	data/chars/brute/walk_01.png
+	frame	data/chars/brute/walk_02.png
+	frame	data/chars/brute/walk_03.png
+
+anim attack1
+	delay	10
+	offset	40 96
+	bbox	8 0 58 94
+	attack	40 -82 54 40 26 2 0 0 9 5
+	frame	data/chars/brute/attack_01.png
+	delay	14
+	attack	0 0 0 0 0
+	frame	data/chars/brute/attack_02.png
+
+anim attack2
+	delay	9
+	offset	40 96
+	bbox	8 0 58 94
+	shock	38 -78 58 42 22 1 0 0 8 5
+	frame	data/chars/brute/attack2_01.png
+	delay	12
+	attack	0 0 0 0 0
+	frame	data/chars/brute/attack2_02.png
+
+anim pain
+	delay	10
+	offset	40 96
+	bbox	10 0 60 94
+	frame	data/chars/brute/pain_01.png
+
+anim death
+	delay	16
+	offset	40 96
+	bbox	10 0 60 94
+	frame	data/chars/brute/death_01.png
+	frame	data/chars/brute/death_02.png

@@ -1,0 +1,124 @@
+# Knight — OpenBOR Stats demonstration model
+# Unknown commands and comments must survive every edit.
+
+name        Knight
+type        player
+subtype     none
+health      240
+mp          80
+speed       12
+running     32 5 2 1 0
+jumpheight  5
+jumpspeed   11
+grabdistance 40
+throwdamage 24
+atchain     1 1 2 3 4
+blockodds   150
+makeinv     3 0
+score       500 5
+icon        data/chars/knight/icon.gif
+load        flash
+load        dust
+custom_note  preserved by OpenBOR Stats
+
+anim idle
+	loop	1
+	delay	10
+	offset	32 84
+	bbox	8 0 48 82
+	frame	data/chars/knight/idle_01.png
+	frame	data/chars/knight/idle_02.png
+	frame	data/chars/knight/idle_03.png
+
+anim walk
+	loop	1
+	delay	8
+	offset	32 84
+	bbox	6 0 50 82
+	frame	data/chars/knight/walk_01.png
+	frame	data/chars/knight/walk_02.png
+	frame	data/chars/knight/walk_03.png
+	frame	data/chars/knight/walk_04.png
+
+anim run
+	loop	1
+	delay	6
+	offset	32 84
+	bbox	8 0 46 82
+	frame	data/chars/knight/run_01.png
+	frame	data/chars/knight/run_02.png
+	frame	data/chars/knight/run_03.png
+	frame	data/chars/knight/run_04.png
+
+# Three-hit ground chain
+anim attack1
+	delay	6
+	offset	32 84
+	bbox	8 0 44 82
+	attack	30 -72 46 30 18 1 0 0 5 4
+	frame	data/chars/knight/attack1_01.png
+	delay	9
+	attack	0 0 0 0 0
+	frame	data/chars/knight/attack1_02.png
+
+anim attack2
+	delay	5
+	offset	32 84
+	bbox	8 0 44 82
+	attack	32 -70 50 34 24 1 0 0 6 4
+	frame	data/chars/knight/attack2_01.png
+	attack	0 0 0 0 0
+	frame	data/chars/knight/attack2_02.png
+
+anim attack3
+	delay	7
+	offset	32 84
+	bbox	8 0 44 82
+	attack	36 -76 52 38 32 2 0 0 8 5
+	frame	data/chars/knight/attack3_01.png
+	delay	11
+	attack	0 0 0 0 0
+	frame	data/chars/knight/attack3_02.png
+
+anim freespecial1
+	delay	8
+	energycost	0 20 0
+	offset	32 84
+	bbox	8 0 44 82
+	blast	30 -70 60 40 30 0 0 6 6
+	frame	data/chars/knight/special_01.png
+	delay	12
+	frame	data/chars/knight/special_02.png
+
+anim jump
+	delay	12
+	offset	32 84
+	bbox	8 0 44 82
+	movea	9
+	frame	data/chars/knight/jump_01.png
+	frame	data/chars/knight/jump_02.png
+
+anim pain
+	delay	8
+	offset	32 84
+	bbox	8 0 44 82
+	frame	data/chars/knight/pain_01.png
+
+anim death
+	delay	14
+	offset	32 84
+	bbox	8 0 44 82
+	frame	data/chars/knight/death_01.png
+	frame	data/chars/knight/death_02.png
+
+# Inline scripts are preserved as raw text.
+anim spawn
+	delay	20
+	offset	32 84
+	@script
+	void main()
+	{
+	    // custom spawn behaviour
+	}
+	@end_script
+	frame	data/chars/knight/idle_01.png

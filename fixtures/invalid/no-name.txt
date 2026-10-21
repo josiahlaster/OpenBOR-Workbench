@@ -1,0 +1,5 @@
+# This file intentionally has no name header and no animations.
+type        enemy
+health      50
+speed       nope
+unknown_thing 42

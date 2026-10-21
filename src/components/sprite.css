@@ -1,0 +1,191 @@
+/* Sprite preview (Frames tab) */
+.sprite-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.sprite-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sprite-stage {
+  background: #0c0f14;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.sprite-canvas {
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  aspect-ratio: 2 / 1;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.sprite-canvas:focus-visible {
+  outline: 2px solid var(--accent, #6aa2ff);
+  outline-offset: -2px;
+}
+
+.sprite-readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  color: var(--muted, #8b93a1);
+}
+
+.sprite-strip {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.sprite-strip-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.sprite-strip-item.active {
+  border-color: var(--accent, #6aa2ff);
+  background: rgba(106, 162, 255, 0.12);
+}
+
+.sprite-thumb {
+  background: #0c0f14;
+  border-radius: 3px;
+  image-rendering: pixelated;
+}
+
+.sprite-thumb.missing {
+  background: repeating-linear-gradient(45deg, #1a1e26 0 6px, #14181f 6px 12px);
+}
+
+/* Project tree (Entities page) */
+.project-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 8px;
+  background: var(--surface, rgba(255, 255, 255, 0.02));
+}
+
+.tree-group {
+  margin-left: 4px;
+}
+
+.tree-group > .tree-group {
+  margin-left: 14px;
+}
+
+.tree-group-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 6px;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+  border-radius: 4px;
+}
+
+.tree-group-head::-webkit-details-marker {
+  display: none;
+}
+
+.tree-group-head:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.tree-count {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--muted, #8b93a1);
+}
+
+.tree-group-body {
+  display: flex;
+  flex-direction: column;
+  padding-left: 12px;
+  border-left: 1px dotted var(--border-soft);
+  margin-left: 8px;
+}
+
+.tree-row {
+  display: grid;
+  grid-template-columns: 28px minmax(120px, 1fr) minmax(90px, 0.8fr) 80px;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 6px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.tree-row:hover {
+  background: rgba(106, 162, 255, 0.1);
+}
+
+.tree-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.tree-name {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-file {
+  font-size: 11px;
+  color: var(--muted, #8b93a1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-kind {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted, #8b93a1);
+  text-align: right;
+}
+
+.tree-empty {
+  padding: 4px 8px;
+}
+
+.view-toggle {
+  display: inline-flex;
+}

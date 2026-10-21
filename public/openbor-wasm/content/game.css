@@ -1,0 +1,70 @@
+body {
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	background-color: black;
+	flex-direction: column;
+	position: relative;
+	touch-action: manipulation;
+}
+#game-container {
+	position: relative;
+}
+#game-container *{
+	user-select: none;
+	touch-action: none;
+}
+canvas {
+	display: none;
+	image-rendering: pixelated;
+}
+#overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50%;
+	height: 100%;
+}
+#buttons-overlay {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 50%;
+	height: 100%;
+}
+.button {
+	position: absolute;
+	width: 20%;
+	height: auto;
+	opacity: 0.5;
+}
+#attack-button {
+	bottom: 5%;
+	right: 27.5%;
+}
+#jump-button {
+	bottom: 5%;
+	right: 5%;
+}
+#star-button {
+	bottom: 17.5%;
+	right: 16%;
+}
+#pause-button {
+	width: 15%;
+	top: 27.5%;
+	right: 5%;
+}
+#fullscreen-button {
+	width: 15%;
+	top: 15%;
+	right: 5%;
+}
+#start-button {
+	padding: 10px 20px;
+	font-size: 20px;
+	cursor: pointer;
+}

@@ -1,0 +1,5 @@
+# OpenBOR Stats fixture manifest
+# Data paths are relative to the game's data directory.
+
+load Knight  data/chars/knight/knight.txt
+load Brute   data/chars/brute/brute.txt
