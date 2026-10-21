@@ -1,6 +1,6 @@
-# OpenBOR Stats
+# OpenBOR Workbench 
 
-OpenBOR Stats is a web application for inspecting, editing, validating, and comparing OpenBOR model `.txt` files. It runs entirely in your browser. No account is required, and no files are uploaded to a server. Projects are saved locally in the browser's IndexedDB storage.
+OpenBOR Workbench is a web application for inspecting, editing, validating, and comparing OpenBOR model `.txt` files. It runs entirely in your browser. No account is required, and no files are uploaded to a server. Projects are saved locally in the browser's IndexedDB storage.
 
 ## Opening the app
 
