@@ -37,7 +37,7 @@ import {
 } from '../core/editor';
 import { FIELD_BY_KEY, FIELD_SECTIONS } from '../core/fields';
 import { compareModels, round } from '../core/compare';
-import { parseModel, tokenizeLine } from '../core/parser';
+import { isLevelModel, parseModel, tokenizeLine } from '../core/parser';
 import { summaryFromModel } from '../core/summary';
 import type {
   AttackBox,
@@ -50,6 +50,7 @@ import type {
 } from '../core/types';
 import { validateModel } from '../core/validation';
 import { SpritePreview } from '../components/SpritePreview';
+import { LevelTab } from '../components/LevelTab';
 import {
   Badge,
   Button,
@@ -460,6 +461,12 @@ export function Editor() {
                 commit={commit}
                 fileName={currentEntity.fileName}
               />
+            ) : null}
+            {tab === 'raw' && isLevelModel(model) ? (
+              <div style={{ marginTop: 16 }}>
+                <div className="small muted" style={{ marginBottom: 8 }}>Level view: scene preview, music, panels, walls and spawns</div>
+                <LevelTab raw={raw} projectId={activeProject.id} commit={commit} />
+              </div>
             ) : null}
             {tab === 'history' ? (
               <HistoryTab
