@@ -4,6 +4,7 @@ import {
   Database,
   FileCode2,
   FolderKanban,
+  GitBranch,
   GitCompareArrows,
   LayoutDashboard,
   Menu,
@@ -95,6 +96,7 @@ export function Layout({ children }: { children: ReactNode }) {
     },
   ];
   const reference: NavItem[] = [
+    { route: 'git', label: 'Git', icon: GitBranch },
     { route: 'docs', label: 'Documentation', icon: BookOpen },
     { route: 'settings', label: 'Settings', icon: Settings },
   ];

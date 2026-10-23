@@ -12,6 +12,7 @@ import { Compare } from './pages/Compare';
 import { ValidationPage } from './pages/ValidationPage';
 import { Manifest } from './pages/Manifest';
 import { Docs } from './pages/Docs';
+import { Git } from './pages/Git';
 import { Settings } from './pages/Settings';
 
 const PAGE_TITLES: Record<string, string> = {
@@ -24,6 +25,7 @@ const PAGE_TITLES: Record<string, string> = {
   manifest: 'models.txt',
   docs: 'Documentation',
   settings: 'Settings',
+  git: 'Git',
 };
 
 function Shell() {
@@ -66,6 +68,9 @@ function Shell() {
       break;
     case 'docs':
       page = <Docs />;
+      break;
+    case 'git':
+      page = <Git />;
       break;
     case 'settings':
       page = <Settings />;

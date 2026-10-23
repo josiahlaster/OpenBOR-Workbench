@@ -9,7 +9,8 @@ export type RouteName =
   | 'validation'
   | 'manifest'
   | 'docs'
-  | 'settings';
+  | 'settings'
+  | 'git';
 
 export interface Route {
   name: RouteName;
@@ -27,6 +28,7 @@ const ROUTE_NAMES: RouteName[] = [
   'manifest',
   'docs',
   'settings',
+  'git',
 ];
 
 export function parseHash(hash: string): Route {
