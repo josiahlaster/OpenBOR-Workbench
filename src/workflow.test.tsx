@@ -97,7 +97,7 @@ describe('application workflow', () => {
   it('imports a folder into a new project through the real dialog', async () => {
     render(<App />);
     expect(
-      await screen.findByRole('heading', { name: /Inspect the numbers behind your OpenBOR models/ }),
+      await screen.findByRole('heading', { name: /Edit, validate and compare OpenBOR game data/ }),
     ).toBeInTheDocument();
 
     await userEvent.click(screen.getByRole('button', { name: 'Import' }));

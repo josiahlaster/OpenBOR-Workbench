@@ -75,8 +75,8 @@ export function Dashboard() {
       <>
         <PageHeader
           eyebrow="OpenBOR Workbench"
-          title="Inspect the numbers behind your OpenBOR models."
-          subtitle="OpenBOR Stats parses character, enemy, NPC, item, and other model .txt files, preserving the original text while exposing headers, animations, frame boxes, attack damage, and validation in one place."
+          title="Edit, validate and compare OpenBOR game data."
+          subtitle="OpenBOR Workbench is a browser-based editor for OpenBOR data folders. Import character, level and models.txt files, check them for errors, compare entities side by side, and edit their fields. Changes are saved to local projects, and exports keep the original .txt format, including comments, scripts, spacing, and unknown commands."
           actions={
             <>
               <Button variant="primary" icon={FolderPlus} onClick={() => openImport('create')}>
@@ -91,11 +91,11 @@ export function Dashboard() {
         <div className="hero">
           <div>
             <div className="page-eyebrow">Local-first · no account required</div>
-            <h1>Your models stay on your machine.</h1>
+            <h1>Your OpenBOR projects, all in one place.</h1>
             <p>
-              Import model files or a full data folder. OpenBOR Stats validates and analyses them in the
-              browser, stores projects in IndexedDB, and exports standard OpenBOR .txt files with comments,
-              scripts, spacing, and unknown commands intact.
+              Open a project to see its characters, enemies, levels and manifest in one workspace. Each file is
+              checked as you go, so you can spot broken references before you run the game. Your data stays in
+              this browser, and exports write the same .txt files back out.
             </p>
             <div className="hero-actions">
               <Button variant="primary" icon={Upload} onClick={() => openImport('create')} size="lg">
