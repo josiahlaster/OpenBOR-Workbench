@@ -18,11 +18,11 @@ import {
 } from 'lucide-react';
 import { useEffect, useState, type ReactNode } from 'react';
 import { basename, classNames } from '../lib/format';
+import { WorkbenchMark } from './WorkbenchMark';
 import { navigate, routeHref, useRoute } from '../lib/router';
 import { useApp } from '../state/AppStore';
 import { useImport } from './ImportDialog';
 import { IconButton } from './ui';
-import { WorkbenchMark } from './WorkbenchMark';
 
 const ROUTE_LABEL: Record<string, string> = {
   dashboard: 'Dashboard',

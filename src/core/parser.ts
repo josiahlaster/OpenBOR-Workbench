@@ -69,7 +69,8 @@ export function tokenizeLine(input: string): string[] {
       started = true;
       continue;
     }
-    if (char === '"' || char === "'") {
+    // A quote only opens at the start of a token, so an apostrophe inside a name (e.g. `Biker-K'`) stays literal.
+    if ((char === '"' || char === "'") && !started) {
       quote = char;
       started = true;
       continue;
@@ -97,7 +98,9 @@ export function splitInlineComment(input: string): { content: string; comment: s
       if (char === quote) quote = null;
       continue;
     }
-    if (char === '"' || char === "'") {
+    // Same rule as tokenizeLine: only a quote at the start of a token is a quote.
+    const startsToken = i === 0 || /\s/.test(input[i - 1]);
+    if ((char === '"' || char === "'") && startsToken) {
       quote = char;
       continue;
     }

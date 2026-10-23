@@ -157,7 +157,12 @@ export function Entities() {
 
   const playInBrowser = async () => {
     try {
-      await playProjectInBrowser(activeProject);
+      const unsaved = Object.fromEntries(
+        activeProject.entities
+          .filter((entity) => drafts[entity.id]?.raw !== undefined)
+          .map((entity) => [entity.id, drafts[entity.id].raw]),
+      );
+      await playProjectInBrowser(activeProject, unsaved);
     } catch (error) {
       notify(error instanceof Error ? error.message : 'Could not start the game in the browser.', 'error');
     }
@@ -182,7 +187,7 @@ export function Entities() {
               disabled={activeProject.entities.length === 0}
               onClick={() => void playInBrowser()}
             >
-              Play in browser
+              Play 
             </Button>
           </>
         }

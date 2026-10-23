@@ -127,7 +127,7 @@ Every number comes from the imported or saved model text. Comparison links let y
 
 ## Playing a project in the browser
 
-On **Entities**, the **Play in browser** button packages the active project (models, models.txt, and imported assets) as a zip and opens the bundled OpenBOR WebAssembly engine (`public/openbor-wasm`) in a new tab. The zip is handed over through a same-origin browser cache under a one-time key; nothing leaves your computer.
+On **Entities**, the **Play ** button packages the active project (models, models.txt, and imported assets) as a zip and opens the bundled OpenBOR WebAssembly engine (`public/openbor-wasm`) in a new tab. The zip is handed over through a same-origin browser cache under a one-time key; nothing leaves your computer.
 
 Requirements and notes:
 

@@ -15,6 +15,18 @@ describe('tokenizeLine', () => {
     expect(tokenizeLine('load Knight ""')).toEqual(['load', 'Knight', '']);
   });
 
+  it('keeps an apostrophe inside a name literal, as OpenBOR does', () => {
+    expect(tokenizeLine("know\tbiker-K'\tdata/chars/biker-k/biker-k.txt")).toEqual([
+      'know',
+      "biker-K'",
+      'data/chars/biker-k/biker-k.txt',
+    ]);
+    expect(splitInlineComment("spawn\tbiker-k' # note")).toEqual({
+      content: "spawn\tbiker-k' ",
+      comment: '# note',
+    });
+  });
+
   it('does not treat a hash inside quotes as a comment', () => {
     expect(splitInlineComment('name "a#b" # real comment')).toEqual({
       content: 'name "a#b" ',

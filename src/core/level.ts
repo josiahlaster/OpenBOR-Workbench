@@ -42,6 +42,8 @@ export interface LevelScene {
   bossMusic: { line: number; path: string } | null;
   background: { line: number; path: string } | null;
   panels: LevelPanel[];
+  /** `frontpanel` images, drawn over the entities (the original's "Front" layer). */
+  frontPanels: { line: number; image: string }[];
   /** Panel letters in the order they are drawn, from every `order` line joined together. */
   order: string;
   orderLines: number[];
@@ -81,6 +83,7 @@ export function parseLevel(text: string): LevelScene {
     bossMusic: null,
     background: null,
     panels: [],
+    frontPanels: [],
     order: '',
     orderLines: [],
     walls: [],
@@ -106,6 +109,8 @@ export function parseLevel(text: string): LevelScene {
       const letter = String.fromCharCode(65 + (panelIndex % 26));
       panelIndex += 1;
       scene.panels.push({ line: index, letter, image: tokens[1] ?? '', mode: tokens[2] ?? 'none' });
+    } else if (key === 'frontpanel') {
+      scene.frontPanels.push({ line: index, image: tokens[1] ?? '' });
     } else if (key === 'order') {
       scene.order += tokens.slice(1).join('');
       scene.orderLines.push(index);

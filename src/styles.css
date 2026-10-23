@@ -163,18 +163,11 @@ button {
 }
 
 .brand-mark {
-  display: grid;
-  place-items: center;
   width: 38px;
   height: 38px;
   border-radius: 11px;
-  background: linear-gradient(145deg, var(--accent), #c7870d);
-  color: #191204;
-  font-weight: 900;
-  font-family: var(--mono);
-  font-size: 14px;
-  letter-spacing: -0.06em;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 6px 16px rgba(240, 180, 41, 0.18);
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 .brand-name {
@@ -215,6 +208,12 @@ button {
   font-weight: 650;
   font-size: 12.5px;
   outline: none;
+  cursor: pointer;
+}
+
+.project-switcher select option {
+  background: var(--panel-2);
+  color: var(--text-strong);
 }
 
 .nav {

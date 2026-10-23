@@ -40,6 +40,26 @@ describe('enginePathFor', () => {
 });
 
 describe('buildProjectZip', () => {
+  it('uses unsaved editor text in place of the saved entity text', async () => {
+    const project = {
+      id: 'project-unsaved-test',
+      name: 'Unsaved test',
+      description: '',
+      createdAt: 0,
+      updatedAt: 0,
+      entities: [entity('demo/data/chars/angel/angel.txt', 'name Angel\n')],
+      modelsFile: 'load Angel data/chars/angel/angel.txt\n',
+      modelsFileName: 'models.txt',
+      assetPaths: [],
+      revisions: [],
+    } as unknown as Project;
+
+    const files = unzipSync(
+      await buildProjectZip(project, { 'demo/data/chars/angel/angel.txt': 'name Angel Edited\n' }),
+    );
+    expect(new TextDecoder().decode(files['data/chars/angel/angel.txt'])).toBe('name Angel Edited\n');
+  });
+
   it('writes entities, models.txt and the engine layout', async () => {
     const project = {
       id: 'project-zip-test',

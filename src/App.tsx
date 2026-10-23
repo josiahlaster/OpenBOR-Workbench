@@ -33,7 +33,7 @@ function Shell() {
   const { ready } = useApp();
 
   useEffect(() => {
-    document.title = `${PAGE_TITLES[route.name] ?? 'Workspace'} · OpenBOR Stats`;
+    document.title = `${PAGE_TITLES[route.name] ?? 'Workspace'} · OpenBOR Workbench`;
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [route.name, route.param]);
 

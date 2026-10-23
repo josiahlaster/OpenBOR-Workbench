@@ -14,6 +14,7 @@ import {
   History,
   Info,
   Layers,
+  Play,
   Plus,
   RotateCcw,
   Save,
@@ -71,6 +72,7 @@ import {
   typeLabel,
   typeTone,
 } from '../lib/format';
+import { playProjectInBrowser } from '../lib/playtest';
 import { navigate } from '../lib/router';
 import { useApp } from '../state/AppStore';
 
@@ -317,6 +319,20 @@ export function Editor() {
     setRevertOpen(false);
   };
 
+  const playInBrowser = async () => {
+    const unsaved: Record<string, string> = {};
+    for (const entity of activeProject.entities) {
+      if (drafts[entity.id]) unsaved[entity.id] = drafts[entity.id].raw;
+    }
+    // The open model's live text is newer than any autosaved draft.
+    unsaved[currentEntity.id] = raw;
+    try {
+      await playProjectInBrowser(activeProject, unsaved);
+    } catch (error) {
+      notify(error instanceof Error ? error.message : 'Could not start the game in the browser.', 'error');
+    }
+  };
+
   const download = () => {
     downloadText(currentEntity.fileName, raw);
     notify(`Downloaded ${currentEntity.fileName}.`, 'success');
@@ -360,6 +376,9 @@ export function Editor() {
           <IconButton icon={Redo2} label="Redo (Ctrl+Shift+Z)" onClick={redo} disabled={future.length === 0} />
           <Button icon={RotateCcw} onClick={() => setRevertOpen(true)} disabled={!dirty}>
             Revert
+          </Button>
+          <Button icon={Play} onClick={() => void playInBrowser()}>
+            Play
           </Button>
           <Button icon={Download} onClick={download}>
             Download .txt
@@ -465,7 +484,12 @@ export function Editor() {
             {tab === 'raw' && isLevelModel(model) ? (
               <div style={{ marginTop: 16 }}>
                 <div className="small muted" style={{ marginBottom: 8 }}>Level view: scene preview, music, panels, walls and spawns</div>
-                <LevelTab raw={raw} projectId={activeProject.id} commit={commit} />
+                <LevelTab
+                  raw={raw}
+                  projectId={activeProject.id}
+                  commit={commit}
+                  onPlay={() => void playInBrowser()}
+                />
               </div>
             ) : null}
             {tab === 'history' ? (

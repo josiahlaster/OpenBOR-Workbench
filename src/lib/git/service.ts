@@ -222,7 +222,17 @@ async function cmdClone(args: string[]): Promise<string[]> {
   }
   const dir = repoDir(name);
   try {
-    await clone({ fs: fileSystem(), http, dir, url, corsProxy: CORS_PROXY, onAuth: onAuthCallback() });
+    // Shallow, single-branch clone: full history of large repos can exhaust browser memory.
+    await clone({
+      fs: fileSystem(),
+      http,
+      dir,
+      url,
+      corsProxy: CORS_PROXY,
+      onAuth: onAuthCallback(),
+      depth: 1,
+      singleBranch: true,
+    });
     await flushFilesystem();
     setCurrentRepo(name);
     const branchName = await checkedBranch(dir);

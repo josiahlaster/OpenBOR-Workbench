@@ -89,7 +89,7 @@
             try {
                 const zipUrl = playtestKey ? await takePlaytestZip(playtestKey) : null;
                 if (!zipUrl) {
-                    window.myGame.LoadingOverlay.textContent = 'Open this page with Play in browser from the workbench.';
+                    window.myGame.LoadingOverlay.textContent = 'Open this page with Play button from the workbench.';
                     return;
                 }
                 window.myGame.paths.assetsPaths = [zipUrl];

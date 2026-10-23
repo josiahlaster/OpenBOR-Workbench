@@ -90,7 +90,8 @@ export function loadKeyedSprite(url: string): Promise<HTMLCanvasElement> {
         const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
         const data = pixels.data;
         for (let i = 0; i < data.length; i += 4) {
-          if (data[i] === 255 && data[i + 1] === 0 && data[i + 2] === 255) data[i + 3] = 0;
+          // Tolerance covers palette and resampling drift around pure magenta.
+          if (data[i] >= 240 && data[i + 1] <= 16 && data[i + 2] >= 240) data[i + 3] = 0;
         }
         context.putImageData(pixels, 0, 0);
         resolve(canvas);

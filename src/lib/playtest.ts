@@ -46,14 +46,18 @@ function addReferencedNameCopies(files: Record<string, Uint8Array>, texts: strin
 }
 
 /** Build the game zip the engine loads: text models, models.txt, and every imported asset. */
-export async function buildProjectZip(project: Project): Promise<Uint8Array> {
+export async function buildProjectZip(
+  project: Project,
+  unsavedText: Record<string, string> = {},
+): Promise<Uint8Array> {
   const encoder = new TextEncoder();
   const files: Record<string, Uint8Array> = {};
   const texts: string[] = [];
 
   for (const entity of project.entities) {
-    files[enginePathFor(entity.path)] = encoder.encode(entity.raw);
-    texts.push(entity.raw);
+    const raw = unsavedText[entity.id] ?? entity.raw;
+    files[enginePathFor(entity.path)] = encoder.encode(raw);
+    texts.push(raw);
   }
 
   const modelsText = project.modelsFile ?? generateModelsManifest(project.entities);
@@ -94,8 +98,11 @@ export async function buildProjectZip(project: Project): Promise<Uint8Array> {
  * through the same-origin Cache API under a one-time key, so the game tab does not depend on this
  * page staying open. Nothing leaves the browser.
  */
-export async function playProjectInBrowser(project: Project): Promise<void> {
-  const bytes = await buildProjectZip(project);
+export async function playProjectInBrowser(
+  project: Project,
+  unsavedText: Record<string, string> = {},
+): Promise<void> {
+  const bytes = await buildProjectZip(project, unsavedText);
   const key = `/openbor-playtest/${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}.zip`;
   const cache = await caches.open(PLAYTEST_CACHE);
   // Drop zips left behind by earlier Play clicks that never reached the game tab.
