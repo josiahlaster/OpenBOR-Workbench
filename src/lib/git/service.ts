@@ -20,6 +20,7 @@ import {
 } from 'isomorphic-git';
 import { getStoredToken, onAuthCallback } from './auth';
 import { helpLines, parseCommandLine, repoNameFromUrl, shortSha } from './commands';
+import type { FileInput } from '../../core/importer';
 
 /** Public CORS proxy. Git hosts do not send CORS headers on their git endpoints. */
 export const CORS_PROXY = 'https://cors.isomorphic-git.org';
@@ -250,6 +251,41 @@ async function cmdClone(args: string[]): Promise<string[]> {
     }
     throw error;
   }
+}
+
+/**
+ * Read every file of a cloned repository (skipping .git) as importer input, so the
+ * repository can become a project through the same path as the Import dialog.
+ */
+export async function readRepoFiles(name: string): Promise<FileInput[]> {
+  const fs = fileSystem().promises;
+  const root = repoDir(name);
+  const files: FileInput[] = [];
+  const walk = async (dir: string, relative: string): Promise<void> => {
+    const entries: string[] = await fs.readdir(dir);
+    for (const entry of entries) {
+      if (entry === '.git') continue;
+      const full = `${dir}/${entry}`;
+      const rel = relative ? `${relative}/${entry}` : entry;
+      const stat = await fs.stat(full);
+      if (stat.isDirectory()) {
+        await walk(full, rel);
+        continue;
+      }
+      const bytes = (await fs.readFile(full)) as Uint8Array;
+      const isText = rel.toLowerCase().endsWith('.txt');
+      const copy = new Uint8Array(bytes);
+      files.push({
+        name: entry,
+        path: `${name}/${rel}`,
+        size: copy.byteLength,
+        text: isText ? new TextDecoder().decode(copy) : undefined,
+        blob: isText ? undefined : new Blob([copy]),
+      });
+    }
+  };
+  await walk(root, '');
+  return files;
 }
 
 /* -------------------------------------------------------------------------- */

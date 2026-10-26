@@ -1,9 +1,11 @@
 import { BrickWall, Download, FileDown, GitBranch, Lock, LockOpen, RefreshCw, Trash2, Upload } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { hasStoredToken, maskedToken, setStoredCredentials } from '../lib/git/auth';
-import { CORS_PROXY, getCurrentRepo, listRepos, runCommand, setCurrentRepo } from '../lib/git/service';
+import { CORS_PROXY, getCurrentRepo, listRepos, readRepoFiles, runCommand, setCurrentRepo } from '../lib/git/service';
 import { Badge, Button, Card, PageHeader } from '../components/ui';
 import { classNames, plural } from '../lib/format';
+import { importFiles } from '../core/importer';
+import { useApp } from '../state/AppStore';
 
 const HISTORY_KEY = 'openbor-stats-git-history';
 
@@ -47,6 +49,7 @@ export function Git() {
   const [tokenState, setTokenState] = useState<string | null>(() => maskedToken());
   const [historyIndex, setHistoryIndex] = useState<number | null>(null);
   const [cloneUrl, setCloneUrl] = useState('');
+  const { createProject, notify } = useApp();
   const pastCommands = useRef<string[]>(loadPastCommands());
   const outputRef = useRef<HTMLDivElement>(null);
   const nextId = useRef(0);
@@ -71,6 +74,22 @@ export function Git() {
     setCurrentRepoState(getCurrentRepo());
   };
 
+  /** Turn a freshly cloned repository into a project so it appears on the Projects tab. */
+  const addClonedProject = async (url: string) => {
+    const name = getCurrentRepo();
+    if (!name) return;
+    try {
+      const imported = importFiles(await readRepoFiles(name));
+      if (imported.entities.length === 0) {
+        notify(`${name} was cloned, but it has no OpenBOR model or level files to add as a project.`, 'error');
+        return;
+      }
+      await createProject(name, `Cloned from ${url}`, imported);
+    } catch (error) {
+      notify(`${name} was cloned, but it could not be added as a project: ${error instanceof Error ? error.message : String(error)}`, 'error');
+    }
+  };
+
   const execute = async (raw: string) => {
     const command = raw.trim();
     if (!command || busy) return;
@@ -86,6 +105,9 @@ export function Git() {
         result.map((line) => ({ kind: line.startsWith('error:') ? ('error' as const) : ('output' as const), text: line })),
       );
       await refreshRepos();
+      if (/^(git\s+)?clone\s/.test(command) && result[0]?.startsWith('cloned ')) {
+        await addClonedProject(command.replace(/^(git\s+)?clone\s+/, '').trim());
+      }
     } catch (error) {
       pushEntries([
         { kind: 'error', text: `error: ${error instanceof Error ? error.message : String(error)}` },
